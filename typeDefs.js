@@ -15,6 +15,9 @@ type Client {
   number: Int!
   TK: Int!
   accounts:[Account]
+  eBanking:eBanking
+  phone_numbers:[Phone_numbers]
+  
 }
 
 
@@ -24,6 +27,7 @@ type Account{
     current_balance: Float!
     client: Client
     credits:[Credit]
+    movements:[Movement]
 }
 
 
@@ -34,6 +38,41 @@ type Credit{
   accounts:[Account]
 }
 
+type eBanking{
+  ID: ID!
+  username: String!
+  password: String!
+  email: String!
+  client: Client!
+}
+
+type Employee{
+  ID: ID!
+  name: String!
+  surname: String!
+  phone_number: String!
+  city: String!
+  street: String!
+  number: Int!
+  TK: Int!
+
+}
+type Movement{
+  ID :ID!
+  type: String!
+  date: String!
+  amount: Float!
+  account: Account!
+}
+
+type Phone_numbers{
+  phone_number:String!
+  client: Client!
+
+}
+
+
+
 
 type Query {
   clients: [Client!]!
@@ -42,7 +81,13 @@ type Query {
   account(id: ID!): Account!
   credits: [Credit!]!
   credit(id:ID!): Credit!
-
+  eBankings: [eBanking!]!
+  eBanking (id: ID!): eBanking!
+  employees:[Employee]
+  employee(id:ID!): Employee
+  movements: [Movement]
+  movement(id:ID!): Movement!
+ 
 }
 `;
 module.exports = {typeDefs};

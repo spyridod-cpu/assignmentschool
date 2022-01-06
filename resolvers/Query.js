@@ -85,7 +85,94 @@ const resolvers = {
         });
 
 
-    }
+    },
+
+
+    eBankings:(parent, args,ctx) =>  {
+            return new Promise((resolve, reject) => {
+                // raw SQLite query to select from table
+                db.all("SELECT * FROM E_BANKING;", function(err, rows) {  
+                    if(err){
+                        reject([]);
+                    }
+                    resolve(rows);
+                });
+            });
+
+
+    },
+
+    eBanking: (parent,args,ctx) => {
+        return new Promise((resolve, reject) => {
+            // raw SQLite query to select from table
+            db.get("SELECT * FROM E_BANKING WHERE ID=(?);",[args.id], function(err, rows) {  
+                if(err){
+                    reject([]);
+                }
+                resolve(rows);
+            });
+        });
+       
+    },
+
+    employees:(parent, args,ctx) =>  {
+        return new Promise((resolve, reject) => {
+            // raw SQLite query to select from table
+            db.all("SELECT * FROM EMPLOYEE;", function(err, rows) {  
+                if(err){
+                    reject([]);
+                }
+                resolve(rows);
+            });
+        });
+
+
+    },
+
+    employee: (parent,args,ctx) => {
+        return new Promise((resolve, reject) => {
+            // raw SQLite query to select from table
+            db.get("SELECT * FROM EMPLOYEE WHERE ID=(?);",[args.id], function(err, rows) {  
+                if(err){
+                    reject([]);
+                }
+                resolve(rows);
+            });
+        });
+   
+    },
+
+
+    movements:(parent, args,ctx) =>  {
+        return new Promise((resolve, reject) => {
+            // raw SQLite query to select from table
+            db.all("SELECT * FROM MOVEMENT;", function(err, rows) {  
+                if(err){
+                    reject([]);
+                }
+                resolve(rows);
+            });
+        });
+
+
+    },
+
+    movement: (parent,args,ctx) => {
+        return new Promise((resolve, reject) => {
+            // raw SQLite query to select from table
+            db.get("SELECT * FROM MOVEMENT WHERE ID=(?);",[args.id], function(err, rows) {  
+                if(err){
+                    reject([]);
+                }
+                resolve(rows);
+            });
+        });
+   
+    },
+
+
+
+
 
 
 },
@@ -102,7 +189,24 @@ const resolvers = {
                 });
             });
             
-        }
+        },
+
+        phone_numbers:(parent, args,ctx)=>{
+            return new Promise((resolve, reject) => {
+                // raw SQLite query to select from table
+                db.all("SELECT * FROM PHONE_NUMBERS WHERE CLIENT_ID=(?);",[parent.ID], function(err, rows) {  
+                    if(err){
+                        reject([]); 
+                    }
+                    resolve(rows);
+                });
+            });
+            
+        },
+
+    
+
+
     },
 
     Account:{
@@ -129,10 +233,28 @@ const resolvers = {
                     resolve(rows);
                 });
             });
-    }
+    },
 
 
-  },
+
+    movements:(parent,args,ctx) =>{
+        return new Promise((resolve, reject) => {
+            // raw SQLite query to select from table
+            db.all("SELECT * FROM MOVEMENT WHERE ACCOUNT_ID =(?) ;",[parent.ID], function(err, rows) {  
+                if(err){
+                    reject([]); 
+                }
+                resolve(rows);
+            });
+        });
+
+
+     }
+
+    },
+
+
+
 
   Credit:{
     accounts:(parent,args,ctx) =>{
@@ -148,6 +270,41 @@ const resolvers = {
   }
 
 
-    }
+    },
+
+    eBanking: {
+        client:(parent,args,ctx) =>{
+            return new Promise((resolve, reject) => {
+                // raw SQLite query to select from table
+                db.get("SELECT * FROM CLIENT WHERE ID IN (SELECT CLIENT_ID FROM E_BANKING WHERE ID=(?));",[parent.ID], function(err, rows) {  
+                    if(err){
+                        reject([]); 
+                    }
+                    resolve(rows);
+                });
+            });
+        }
+
+
+    },
+    
+
+    Movement: {
+        account:(parent,args,ctx) =>{
+            return new Promise((resolve, reject) => {
+                // raw SQLite query to select from table
+                db.get("SELECT * FROM ACCOUNT WHERE ID IN (SELECT ACCOUNT_ID FROM MOVEMENT WHERE ID=(?));",[parent.ID], function(err, rows) {  
+                    if(err){
+                        reject([]); 
+                    }
+                    resolve(rows);
+                });
+            });
+        }
+
+    },
+
+   
+
 }
 module.exports = {resolvers};
