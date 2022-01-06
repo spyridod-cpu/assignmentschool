@@ -60,6 +60,34 @@ const resolvers = {
     },
 
 
+    credits: (parent,args,ctx)=>{
+        return new Promise((resolve, reject) => {
+            // raw SQLite query to select from table
+            db.all("SELECT * FROM CREDIT;", function(err, rows) {  
+                if(err){
+                    reject([]);
+                }
+                resolve(rows);
+            });
+        });
+    },
+
+
+    credit:(parent,args,ctx)=>{
+        return new Promise((resolve, reject) => {
+            // raw SQLite query to select from table
+            db.get("SELECT * FROM CREDIT WHERE ID=(?);",[args.id], function(err, rows) {  
+                if(err){
+                    reject([]);
+                }
+                resolve(rows);
+            });
+        });
+
+
+    }
+
+
 },
 
     Client:{

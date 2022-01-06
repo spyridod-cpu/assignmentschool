@@ -22,6 +22,11 @@ type Account{
     current_balance: Float!
     client: Client
 }
+type Credit{
+  ID: ID!
+  PIN: Int!
+  expiry_date: String!
+}
 
 
 type Query {
@@ -29,6 +34,8 @@ type Query {
   client(id: ID!): Client!
   accounts: [Account!]!
   account(id: ID!): Account!
+  credits: [Credit!]!
+  credit(id:ID!): Credit!
 
 }
 `;
