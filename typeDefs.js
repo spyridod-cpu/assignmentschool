@@ -16,16 +16,22 @@ type Client {
   TK: Int!
   accounts:[Account]
 }
+
+
 type Account{
     ID:ID!
     type: String!
     current_balance: Float!
     client: Client
+    credits:[Credit]
 }
+
+
 type Credit{
   ID: ID!
   PIN: Int!
   expiry_date: String!
+  accounts:[Account]
 }
 
 

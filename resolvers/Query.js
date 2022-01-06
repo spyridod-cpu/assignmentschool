@@ -117,9 +117,37 @@ const resolvers = {
                 });
             });
 
-        }
+        },
+
+        credits:(parent,args,ctx) =>{
+            return new Promise((resolve, reject) => {
+                // raw SQLite query to select from table
+                db.all("SELECT * FROM CREDIT WHERE ID IN (SELECT CREDIT_ID FROM LINKED WHERE ACCOUNT_ID =(?) );",[parent.ID], function(err, rows) {  
+                    if(err){
+                        reject([]); 
+                    }
+                    resolve(rows);
+                });
+            });
     }
 
 
-  };
+  },
+
+  Credit:{
+    accounts:(parent,args,ctx) =>{
+        return new Promise((resolve, reject) => {
+            // raw SQLite query to select from table
+            db.all("SELECT * FROM ACCOUNT WHERE ID IN (SELECT ACCOUNT_ID FROM LINKED WHERE CREDIT_ID= (?) );",[parent.ID], function(err, rows) {  
+                if(err){
+                    reject([]);     
+                }
+                resolve(rows);
+            });
+        });
+  }
+
+
+    }
+}
 module.exports = {resolvers};
