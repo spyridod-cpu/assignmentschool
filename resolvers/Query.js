@@ -167,11 +167,10 @@ const resolvers = {
                 resolve(rows);
             });
         });
-   
+
     },
 
-
-
+   
 
 
 
@@ -304,7 +303,55 @@ const resolvers = {
 
     },
 
-   
+    Mutation: {
+        addClient:(parent, {
+            ID,
+            name,
+            surname,
+            patronym,
+            AFM,
+            AT,
+            city,
+            street,
+            number,
+            TK,
+        },ctx)=> {
+            return new Promise((resolve, reject) => {
+                db.run('INSERT INTO Client (ID,name,surname,patronym,AFM,AT,city,street,number,TK) VALUES (?,?,?,?,?,?,?,?,?,?);', [ ID,
+                    name,
+                    surname,
+                    patronym,
+                    AFM,
+                    AT,
+                    city,
+                    street,
+                    number,
+                    TK ], (err) => {
+                        if(err) {
+                            reject(null);
+                        }  
+                        db.get("SELECT last_insert_rowid() as id", (err, row) => {
+                        
+                            resolve({
+                                ID:row["id"],   
+                                name:name,
+                                surname:surname,
+                                patronym:patronym,
+                                AFM:AFM,
+                                AT:AT,
+                                city:city,
+                                street:street,
+                                number:number,
+                                TK:TK,
+                            });
+                        });
+                        
 
+                });
+               
+            });
+           
+        }
+    }
 }
 module.exports = {resolvers};

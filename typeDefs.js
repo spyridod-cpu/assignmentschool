@@ -18,6 +18,7 @@ type Client {
   eBanking:eBanking
   phone_numbers:[Phone_numbers]
   
+  
 }
 
 
@@ -74,6 +75,7 @@ type Phone_numbers{
 
 
 
+
 type Query {
   clients: [Client!]!
   client(id: ID!): Client!
@@ -87,7 +89,23 @@ type Query {
   employee(id:ID!): Employee
   movements: [Movement]
   movement(id:ID!): Movement!
- 
+  
+}
+
+
+type Mutation {
+  addClient (
+  ID:ID!
+  name: String!
+  surname: String!
+  patronym: String!
+  AFM: Int!
+  AT: String!
+  city: String!
+  street: String!
+  number: Int!
+  TK: Int!
+  ):Client
 }
 `;
 module.exports = {typeDefs};
