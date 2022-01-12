@@ -202,7 +202,7 @@ const resolvers = {
             });
             
         },
-        
+
         eBanking:(parent, args,ctx)=>{
             return new Promise((resolve, reject) => {
                 // raw SQLite query to select from table
@@ -444,7 +444,85 @@ const resolvers = {
                
             });
            
+        },
+
+        createAccount:(parent, {
+            ID,
+            type,
+            current_balance,
+            client_id
+        },ctx)=> {
+            return new Promise((resolve, reject) => {
+                db.run('INSERT INTO ACCOUNT (ID,type,current_balance,CLIENT_ID) VALUES (?,?,?,?);', [
+                    ID,
+                    type,
+                    current_balance,
+                    client_id
+                 ], (err) => {
+                        if(err) {
+                            reject(null);
+                        }  
+                        db.get("SELECT last_insert_rowid() as id", (err, row) => {
+                        
+                            resolve({
+                                ID:row["id"],
+                                type:type,
+                                current_balance:current_balance,
+                                client_id:client_id
+                            });
+                        });
+                        
+
+                });
+               
+            });
+           
+        },
+
+
+
+        createMovement:(parent, {
+            ID,
+            type,
+            date,
+            amount,
+            account_id
+        },ctx)=> {
+            return new Promise((resolve, reject) => {
+                db.run('INSERT INTO MOVEMENT (ID,type,date,amount,ACCOUNT_id) VALUES (?,?,?,?,?);', [
+                    ID,
+                    type,
+                    date,
+                    amount,
+                    account_id
+                 ], (err) => {
+                        if(err) {
+                            reject(null);
+                        }  
+                        db.get("SELECT last_insert_rowid() as id", (err, row) => {
+                        
+                            resolve({
+                                ID:row["id"],
+                                type:type,
+                                date:date,
+                                amount:amount,
+                                account_id:account_id
+                            });
+                        });
+                        
+
+                });
+               
+            });
+           
         }
+        
+
+
+
+
+
+
     }
 }
 module.exports = {resolvers};

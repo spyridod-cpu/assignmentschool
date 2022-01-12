@@ -132,7 +132,18 @@ type Mutation {
     ID:ID!
     type: String!
     current_balance: Float!
+    client_id:ID!
   ):Account
+
+
+  createMovement(
+    ID :ID!
+    type: String!
+    date: String!
+    amount: Float!
+    account_id: ID!
+
+  ):Movement
 }
 `;
 module.exports = {typeDefs};
