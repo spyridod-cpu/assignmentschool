@@ -94,7 +94,7 @@ type Query {
 
 
 type Mutation {
-  addClient (
+  createClient (
   ID:ID!
   name: String!
   surname: String!
@@ -106,6 +106,33 @@ type Mutation {
   number: Int!
   TK: Int!
   ):Client
+
+
+  createEmployee(
+    ID:ID!
+    name:String!
+    surname:String!
+    phone_number:String!
+    city:String!
+    street:String!
+    number:Int!
+    TK:Int!
+  ):Employee
+
+  createeBanking(
+  ID: ID!
+  username: String!
+  password: String!
+  email: String!
+  client_id:ID!
+  ):eBanking
+
+
+  createAccount(
+    ID:ID!
+    type: String!
+    current_balance: Float!
+  ):Account
 }
 `;
 module.exports = {typeDefs};

@@ -202,6 +202,20 @@ const resolvers = {
             });
             
         },
+        
+        eBanking:(parent, args,ctx)=>{
+            return new Promise((resolve, reject) => {
+                // raw SQLite query to select from table
+                db.get("SELECT * FROM E_BANKING WHERE CLIENT_ID=(?);",[parent.ID], function(err, rows) {  
+                    if(err){
+                        reject([]); 
+                    }
+                    resolve(rows);
+                });
+            });
+            
+        },
+    
 
     
 
@@ -304,7 +318,7 @@ const resolvers = {
     },
 
     Mutation: {
-        addClient:(parent, {
+        createClient:(parent, {
             ID,
             name,
             surname,
@@ -317,7 +331,7 @@ const resolvers = {
             TK,
         },ctx)=> {
             return new Promise((resolve, reject) => {
-                db.run('INSERT INTO Client (ID,name,surname,patronym,AFM,AT,city,street,number,TK) VALUES (?,?,?,?,?,?,?,?,?,?);', [ ID,
+                db.run('INSERT INTO CLIENT (ID,name,surname,patronym,AFM,AT,city,street,number,TK) VALUES (?,?,?,?,?,?,?,?,?,?);', [ ID,
                     name,
                     surname,
                     patronym,
@@ -343,6 +357,85 @@ const resolvers = {
                                 street:street,
                                 number:number,
                                 TK:TK,
+                            });
+                        });
+                        
+
+                });
+               
+            });
+           
+        },
+
+        createEmployee:(parent, {
+            ID,
+            name,
+            surname,
+            phone_number,
+            city,
+            street,
+            number,
+            TK
+        },ctx)=> {
+            return new Promise((resolve, reject) => {
+                db.run('INSERT INTO Employee (ID,name,surname,phone_number,city,street,number,TK) VALUES (?,?,?,?,?,?,?,?);', [ ID,
+                    name,
+                    surname,
+                    phone_number,
+                    city,
+                    street,
+                    number,
+                    TK ], (err) => {
+                        if(err) {
+                            reject(null);
+                        }  
+                        db.get("SELECT last_insert_rowid() as id", (err, row) => {
+                        
+                            resolve({
+                                ID:row["id"],   
+                                name:name,
+                                surname:surname,
+                                phone_number:phone_number,
+                                city:city,
+                                street:street,
+                                number:number,
+                                TK:TK,
+                            });
+                        });
+                        
+
+                });
+               
+            });
+           
+        },
+        
+        createeBanking:(parent, {
+            ID,
+            username,
+            password,
+            email,
+            client_id
+        },ctx)=> {
+            return new Promise((resolve, reject) => {
+                db.run('INSERT INTO E_BANKING (ID,username,password,email,client_id) VALUES (?,?,?,?,?);', [
+                    ID,
+                    username,
+                    password,
+                    email,
+                    client_id
+                 ], (err) => {
+                        if(err) {
+                            reject(null);
+                        }  
+                        db.get("SELECT last_insert_rowid() as id", (err, row) => {
+                        
+                            resolve({
+                                ID:row["id"],
+                                username:username,
+                                password:password,
+                                email:email,
+                                client_id:client_id
                             });
                         });
                         
