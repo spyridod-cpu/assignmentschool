@@ -264,6 +264,7 @@ const resolvers = {
 
      }
 
+
     },
 
 
@@ -515,7 +516,87 @@ const resolvers = {
                
             });
            
-        }
+        },
+
+
+        createCredit:(parent, {
+            ID,
+            PIN,
+            expiry_date
+        },ctx)=> {
+            return new Promise((resolve, reject) => {
+                db.run('INSERT INTO CREDIT(ID,PIN,expiry_date) VALUES (?,?,?);', [
+                    ID,
+                    PIN,
+                    expiry_date
+                 ], (err) => {
+                        if(err) {
+                            reject(null);
+                        }  
+                        db.get("SELECT last_insert_rowid() as id", (err, row) => {
+                        
+                            resolve({
+                                ID:row["id"],
+                                PIN:PIN,
+                                expiry_date:expiry_date
+                            });
+                        });
+                        
+
+                });
+               
+            });
+           
+        },
+
+
+
+        createLink:(parent, {
+            account_id,
+            credit_id
+        },ctx)=> {
+            return new Promise((resolve, reject) => {
+                db.run(`INSERT INTO LINKED(ACCOUNT_ID,CREDIT_ID) VALUES (?,?);`, [ account_id,credit_id ], (err) => {
+                        if(err) {
+                            reject(null);
+                        }  
+                        db.get("SELECT * FROM Credit WHERE ID = (?);",[credit_id],function (err, rows) {
+                            console.log(rows)
+                            resolve(rows);
+                        });
+                        
+
+                });
+               
+            });
+           
+        },
+
+
+        createPhoneForClient:(parent, {
+            client_id,
+            phone_number
+        },ctx)=> {
+            return new Promise((resolve, reject) => {
+                db.run(`INSERT INTO PHONE_NUMBERS(CLIENT_ID,phone_number) VALUES (?,?);`, [ client_id,phone_number ], (err) => {
+                        if(err) {
+                            reject(null);
+                        }  
+                        db.get("SELECT * FROM Client WHERE ID = (?);",[client_id],function (err, rows) {
+                            resolve(rows);
+                        });
+                        
+
+                });
+               
+            });
+           
+        },
+    
+
+       
+           
+       
         
 
 

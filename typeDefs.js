@@ -142,8 +142,24 @@ type Mutation {
     date: String!
     amount: Float!
     account_id: ID!
-
   ):Movement
+
+  createCredit(
+    ID: ID!
+    PIN: Int!
+    expiry_date: String!
+  ):Credit
+
+    createLink(
+      account_id: ID!
+      credit_id: ID!
+    ):Credit
+
+    createPhoneForClient(
+      phone_number:String!
+      client_id:ID!
+    ):Client
+
 }
 `;
 module.exports = {typeDefs};
