@@ -107,7 +107,6 @@ type Mutation {
   TK: Int!
   ):Client
 
-
   createEmployee(
     ID:ID!
     name:String!
@@ -137,7 +136,7 @@ type Mutation {
 
 
   createMovement(
-    ID :ID!
+    ID: ID!
     type: String!
     date: String!
     amount: Float!
@@ -160,6 +159,77 @@ type Mutation {
       client_id:ID!
     ):Client
 
+    updateClient(
+      ID:ID
+      name: String
+      surname: String
+      patronym: String
+      AFM: Int
+      AT: String
+      city: String
+      street: String
+      number: Int
+      TK: Int
+
+    ):Client
+
+    updateAccount(
+      ID:ID!
+      type: String
+      current_balance: Float
+    ):Account
+
+
+
+    updateCredit(
+    ID: ID!
+    PIN: Int
+    expiry_date: String
+    ):Credit
+
+    updateeBanking(
+      ID:ID!
+      username: String
+      password: String
+      email: String
+    ):eBanking
+
+
+
+    updateEmployee(
+    ID: ID!
+    name: String
+    surname: String
+    phone_number: String
+    city: String
+    street: String
+    number: Int
+    TK: Int
+    ):Employee
+
+
+    updateMovement (
+      ID :ID!
+      type: String
+      date: String
+      amount: Float
+    ):Movement
+
+
+
+
+    updatePhone_numbers(
+      ID:ID!
+      phone_number:String!
+      CLIENT_ID:ID
+    ):Phone_numbers
+
+
+
+
+
+
 }
+
 `;
 module.exports = {typeDefs};
