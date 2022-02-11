@@ -592,18 +592,229 @@ const resolvers = {
             });
            
         },
+
+
     
 
-       
-           
-       
+
+        updateClient:(parent,{
+            ID,
+            name,
+            surname,
+            patronym,
+            AFM,
+            AT,
+            city,
+            street,
+            number,
+            TK
+        },ctx)=>{
+            return new Promise((resolve,reject)=>{
+                if (name !=null){
+                    db.run('UPDATE CLIENT SET name=(?) WHERE ID = (?);',[name,ID]);
+                    }
+                if (surname!=null){
+                    db.run('UPDATE CLIENT SET surname=(?) WHERE ID= (?)',[surname,ID]);
+                }
+                if (patronym!=null){
+                    db.run('UPDATE CLIENT SET patronym=(?) WHERE ID= (?)',[patronym,ID]);
+                }
+                if (AFM!=null){
+                    db.run('UPDATE CLIENT SET AFM=(?) WHERE ID= (?)',[AFM,ID]);
+                }
+                if (AT!=null){
+                    db.run('UPDATE CLIENT SET AT=(?) WHERE ID= (?)',[AT,ID]);
+
+                }
+                if (city!=null){
+                    db.run('UPDATE CLIENT SET city=(?) WHERE ID= (?)',[city,ID]);
+                }
+                if (street!=null){
+                    db.run('UPDATE CLIENT SET street=(?) WHERE ID= (?)',[street,ID]);
+                }
+                if (number!=null){
+                    db.run('UPDATE CLIENT SET number=(?) WHERE ID= (?)',[number,ID]);
+                }
+                if (TK!=null){
+                    db.run('UPDATE CLIENT SET TK=(?) WHERE ID= (?)',[TK,ID]);
+                }
+
+                db.get("SELECT * FROM CLIENT WHERE ID = (?);",[ID], function(err, rows) {                           
+                    if(err){
+                        reject(null);
+                    }
+                    resolve(rows);
+                    });
+                }
+          
+            )
+        },
+
+
+
+        updateAccount:(parent,{
+            ID,
+            type,
+            current_balance
+        },ctx)=>{
+            return new Promise((resolve,reject)=>{
+                if (type !=null){
+                    db.run('UPDATE ACCOUNT SET type=(?) WHERE ID = (?);',[type,ID]);
+                    }
+                if (current_balance!=null){
+                    db.run('UPDATE ACCOUNT SET current_balance=(?) WHERE ID= (?)',[current_balance,ID]);
+                }
+               
+                db.get("SELECT * FROM ACCOUNT WHERE ID = (?);",[ID], function(err, rows) {                           
+                    if(err){
+                        reject(null);
+                    }
+                    resolve(rows);
+                    });
+                }
+          
+            )
+        },
+
+
+
+
+        updateeBanking:(parent,{
+            ID,
+            username,
+            password,
+            email,
+            client_id
+        },ctx)=>{
+            return new Promise((resolve,reject)=>{
+                if (username !=null){
+                    db.run('UPDATE E_BANKING SET username=(?) WHERE ID = (?);',[username,ID]);
+                    }
+                if (password!=null){
+                    db.run('UPDATE E_BANKING SET password=(?) WHERE ID= (?)',[password,ID]);
+                }
+                if (email!=null){
+                    db.run('UPDATE E_BANKING SET email=(?) WHERE ID= (?)',[email,ID]);
+                }
+                if (client_id!=null){
+                    db.run('UPDATE E_BANKING SET client_id=(?) WHERE ID= (?)',[client_id,ID]);
+                }
+               
+
+                db.get("SELECT * FROM E_BANKING WHERE ID = (?);",[ID], function(err, rows) {                           
+                    if(err){
+                        reject(null);
+                    }
+                    resolve(rows);
+                    });
+                }
+          
+            )
+        },
+
+
+
+
+        updateEmployee:(parent,{
+            ID,
+            name,
+            surname,
+            phone_number,
+            city,
+            street,
+            number,
+            TK,
+        },ctx)=>{
+            return new Promise((resolve,reject)=>{
+                if (name !=null){
+                    db.run('UPDATE EMPLOYEE SET name=(?) WHERE ID = (?);',[name,ID]);
+                    }
+                if (surname!=null){
+                    db.run('UPDATE EMPLOYEE SET surname=(?) WHERE ID= (?)',[surname,ID]);
+                }
+                
+                if (phone_number!=null){
+                    db.run('UPDATE EMPLOYEE SET AT=(?) WHERE ID= (?)',[phone_number,ID]);
+
+                }
+                if (city!=null){
+                    db.run('UPDATE EMPLOYEE SET city=(?) WHERE ID= (?)',[city,ID]);
+                }
+                if (street!=null){
+                    db.run('UPDATE EMPLOYEE SET street=(?) WHERE ID= (?)',[street,ID]);
+                }
+                if (number!=null){
+                    db.run('UPDATE EMPLOYEE SET number=(?) WHERE ID= (?)',[number,ID]);
+                }
+                if (TK!=null){
+                    db.run('UPDATE EMPLOYEE SET TK=(?) WHERE ID= (?)',[TK,ID]);
+                }
+
+                db.get("SELECT * FROM EMPLOYEE WHERE ID = (?);",[ID], function(err, rows) {                           
+                    if(err){
+                        reject(null);
+                    }
+                    resolve(rows);
+                    });
+                }
+          
+            )
+        },
+
+
+
+
+
+        updateMovement:(parent,{
+            ID,
+            type,
+            date,
+            amount,
+        },ctx)=>{
+            return new Promise((resolve,reject)=>{
+                if (type!=null){
+                    db.run('UPDATE MOVEMENT SET type=(?) WHERE ID = (?);',[type,ID]);
+                    }
+                if (date!=null){
+                    db.run('UPDATE MOVEMENT SET date=(?) WHERE ID= (?)',[date,ID]);
+                }
+                
+                if (amount!=null){
+                    db.run('UPDATE MOVEMENT SET amount=(?) WHERE ID= (?)',[amount,ID]);
+
+                }
+             
+
+                db.get("SELECT * FROM MOVEMENT WHERE ID = (?);",[ID], function(err, rows) {                           
+                    if(err){
+                        reject(null);
+                    }
+                    resolve(rows);
+                    });
+                }
+          
+            )
+        },
+
+
+
+
+
+
+
         
 
-
-
+     
 
 
 
     }
+
+
+
+
+
+
+
 }
 module.exports = {resolvers};
